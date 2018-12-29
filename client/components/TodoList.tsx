@@ -1,6 +1,8 @@
 import * as React from "react";
-import * as classNames from "classnames";
 import { observer } from "mobx-react";
+
+import { TextInput } from "./TextInput";
+import { TodoItem } from "./TodoItem";
 import { TodoState } from "../state";
 
 type Props = {
@@ -13,31 +15,15 @@ export class TodoList extends React.Component<Props> {
         const { todos, newTodo } = this.props.todoState;
         return (
             <div>
-                <input type="text" value={newTodo.description} onChange={this.updateNewTodo} />
-                <button onClick={this.addTodo}>Add</button>
-                {todos.map((todo, index) => <TodoItem key={index} todo={todo} />)}
+                {todos.map((todo, index) => <TodoItem key={index} todo={todo} onRemove={this.removeTodo} onSave={this.saveTodo} />)}
+                <div className="line" />
+                <TextInput className={["big", "no-underline"]} placeholder="New Todo" value={newTodo.description} onChange={this.updateNewTodo} onSave={this.addTodo} />
             </div>
         );
     }
 
-    updateNewTodo = (event: React.ChangeEvent<HTMLInputElement>) =>
-        this.props.todoState.newTodo.description = event.currentTarget.value;
-
-    addTodo = () => this.props.todoState.addTodo();
-}
-
-type TodoProps = {
-    todo: Todo;
-};
-
-@observer
-class TodoItem extends React.Component<TodoProps> {
-    render() {
-        const { todo } = this.props;
-        return (
-            <div className={classNames(todo.id ? "saved" : "saving", "todo")}>
-                <h2>{todo.description}</h2>
-            </div>
-        );
-    }
+    updateNewTodo = (value: string) => this.props.todoState.newTodo.description = value;
+    addTodo = () => { if (this.props.todoState.newTodo.description) this.props.todoState.addTodo() };
+    removeTodo = (todo: Todo) => this.props.todoState.removeTodo(todo);
+    saveTodo = (todo: Todo) => this.props.todoState.saveTodo(todo);
 }

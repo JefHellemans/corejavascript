@@ -2,7 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { file, uuid } from "./helpers";
 
-const todos: Todo[] = [
+let todos: Todo[] = [
     {
         id: uuid(),
         description: "Add new todos",
@@ -27,6 +27,10 @@ app.put("/todos", (req, res) => {
     const todo = todos.find(todo => todo.id === req.body.id);
     Object.assign(todo, req.body);
     res.send(todo);
+});
+app.delete("/todos", (req, res) => {
+    todos = todos.filter(todo => todo.id !== req.body.id);
+    res.sendStatus(200);
 });
 
 app.listen(3000, () => console.log("server started"));

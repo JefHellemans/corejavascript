@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { get, post, put } from "../api";
+import { get, post, put, remove } from "../api";
 
 const blankTodo = { description: "", completed: false };
 
@@ -18,5 +18,14 @@ export class TodoState {
     async addTodo() {
         post<Todo>("/todos", this.newTodo, this.todos);
         this.newTodo = { ...blankTodo };
+    }
+
+    async removeTodo(todo: Todo) {
+        remove("/todos", todo);
+        this.todos = this.todos.filter(t => t.id !== todo.id);
+    }
+
+    async saveTodo(todo: Todo) {
+        put("/todos", todo);
     }
 }
