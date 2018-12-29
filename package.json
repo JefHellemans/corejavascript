@@ -1,0 +1,11 @@
+{
+    "name": "corejavascript",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:JefHellemans/corejavascript.git",
+    "author": "JefHellemans <hello@jefhellemans.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "^3.2.2"
+    }
+}
