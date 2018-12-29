@@ -1,0 +1,7 @@
+.todo.saving {
+    opacity: 0.5;
+}
+
+.todo.saved {
+    opacity: 1;
+}

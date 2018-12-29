@@ -11,11 +11,15 @@
         "start": "run-p client server"
     },
     "devDependencies": {
+        "@types/classnames": "^2.2.6",
         "@types/express": "^4.16.0",
         "@types/react": "^16.7.18",
         "@types/react-dom": "^16.0.11",
         "body-parser": "^1.18.3",
+        "classnames": "^2.2.6",
         "express": "^4.16.4",
+        "mobx": "^5.8.0",
+        "mobx-react": "^5.4.3",
         "nodemon": "^1.18.9",
         "npm-run-all": "^4.1.5",
         "react": "^16.7.0",
