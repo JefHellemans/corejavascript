@@ -1,4 +1,4 @@
-import { observable } from "mobx";
+import { computed, observable } from "mobx";
 import { get, post, put, remove } from "../api";
 
 const blankTodo = { description: "", completed: false };
@@ -6,13 +6,27 @@ const blankTodo = { description: "", completed: false };
 export class TodoState {
     @observable todos: Todo[] = [];
     @observable newTodo: Todo = { ...blankTodo };
+    @observable filters = {
+        completed: false,
+        uncompleted: true,
+    };
+
+    @computed
+    get displayedTodos() {
+        return this.todos.filter(todo =>
+            (todo.completed && this.filters.completed) ||
+            (!todo.completed && this.filters.uncompleted)
+        );
+    }
 
     constructor() {
         this.getTodos();
     }
 
     async getTodos() {
-        this.todos = await get<Todo[]>("/todos");
+        const todos = await get<Todo[]>("/todos");
+        todos.forEach(todo => todo.due = todo.due && new Date(todo.due));
+        this.todos = todos;
     }
 
     async addTodo() {
