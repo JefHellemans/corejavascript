@@ -1,0 +1,35 @@
+@import "../variables.scss";
+
+.todo {
+    display: flex;
+    align-items: center;
+    margin: $spacing-l 0;
+
+    &.saving {
+        opacity: $opacity-1;
+    }
+
+    .description {
+        margin-bottom: $spacing-xs;
+    }
+
+    .inputs {
+        flex-grow: 100;
+        margin: 0 $spacing-m;
+
+        .extra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .dueDate {
+                display: flex;
+                align-items: center;
+
+                .dueDateLabel {
+                    margin-right: $spacing-s;
+                }
+            }
+        }
+    }
+}

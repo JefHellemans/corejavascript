@@ -9,6 +9,6 @@
         "strict": true,
         "sourceMap": true,
 
-        "types": ["../types"]
+        "types": [ "../types", "node" ]
     }
 }

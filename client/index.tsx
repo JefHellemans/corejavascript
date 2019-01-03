@@ -4,6 +4,8 @@ import * as ReactDOM from "react-dom";
 import { TodoState } from "./state";
 import { TodoList } from "./components/TodoList";
 
+require("./index.scss");
+
 const todoState = new TodoState();
 
 ReactDOM.render(

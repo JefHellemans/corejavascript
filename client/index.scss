@@ -1,0 +1,31 @@
+@import "./variables.scss";
+
+body {
+    font-size: $font-size-m;
+    line-height: $line-height-default;
+    font-family: $font-family-default;
+    padding: $spacing-xl $spacing-m;
+    background: $color-neutral-2;
+    color: $color-neutral-0;
+}
+
+h1 {
+    margin-bottom: $spacing-l;
+}
+
+button {
+    border: $border-default;
+    outline: none;
+    background: $color-neutral-2;
+    color: $color-neutral-0;
+    font-size: $font-size-s;
+    padding: $spacing-xs $spacing-s;
+    font-weight: bold;
+    cursor: pointer;
+    transition: $transition-default;
+
+    &:hover {
+        background: $color-neutral-0;
+        color: $color-neutral-2;
+    }
+}

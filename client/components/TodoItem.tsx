@@ -2,7 +2,9 @@ import * as React from "react";
 import * as classNames from "classnames";
 import { observer } from "mobx-react";
 
-import { Checkbox, TextInput } from "../uikit";
+import * as styles from "./TodoItem.scss";
+
+import { Checkbox, TextInput, TextInputStyles } from "../uikit";
 
 type Props = {
     todo: Todo;
@@ -15,25 +17,25 @@ export class TodoItem extends React.Component<Props> {
     render() {
         const { todo } = this.props;
         return (
-            <div className={classNames("todo", { "saving": !todo.id })}>
+            <div className={classNames(styles.todo, { [styles.saving]: !todo.id })}>
                 <Checkbox value={todo.completed} onToggle={this.toggleCompleted} />
-                <div className="inputs">
+                <div className={styles.inputs}>
                     <TextInput
-                        className="big"
+                        className={classNames(styles.description, TextInputStyles.large)}
                         placeholder="Todo Description"
                         value={todo.description}
                         onChange={this.setDescription}
                         onSave={this.save}
                     />
-                    <div className="extra">
+                    <div className={styles.extra}>
                         <TextInput
                             placeholder="Assignee"
                             value={todo.assignee}
                             onChange={this.setAssignee}
                             onSave={this.save}
                         />
-                        <div className="datetime">
-                            <span>Due Date:</span>
+                        <div className={styles.dueDate}>
+                            <span className={styles.dueDateLabel}>Due Date:</span>
                             <input type="date" value={this.formatDate()} onChange={this.setDueDate} />
                         </div>
                     </div>

@@ -1,10 +1,13 @@
 import * as React from "react";
+import * as classNames from "classnames";
 import { observer } from "mobx-react";
 
 import { TodoItem } from "./TodoItem";
 
 import { TodoState } from "../state";
-import { Checkbox, TextInput } from "../uikit";
+import { Checkbox, Line, TextInput, TextInputStyles } from "../uikit";
+
+import * as styles from "./TodoList.scss";
 
 type Props = {
     todoState: TodoState;
@@ -16,16 +19,18 @@ export class TodoList extends React.Component<Props> {
         const { displayedTodos, filters, newTodo } = this.props.todoState;
         return (
             <div>
-                <Checkbox value={filters.completed} label="Completed" onToggle={this.toggleCompleted} />
-                <Checkbox value={filters.uncompleted} label="Uncompleted" onToggle={this.toggleUncompleted} />
+                <div className={styles.filters}>
+                    <Checkbox value={filters.completed} label="Completed" onToggle={this.toggleCompleted} />
+                    <Checkbox value={filters.uncompleted} label="Uncompleted" onToggle={this.toggleUncompleted} />
+                </div>
                 <TextInput
-                    className={["big", "no-underline"]}
+                    className={classNames(TextInputStyles.large, TextInputStyles.noUnderline)}
                     placeholder="New Todo"
                     value={newTodo.description}
                     onChange={this.updateNewTodo}
                     onSave={this.addTodo}
                 />
-                <div className="line" />
+                <Line />
                 {displayedTodos.map((todo, index) =>
                     <TodoItem key={index} todo={todo} onRemove={this.removeTodo} onSave={this.saveTodo} />
                 )}

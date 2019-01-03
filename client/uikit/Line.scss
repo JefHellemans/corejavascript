@@ -1,0 +1,8 @@
+@import "../variables.scss";
+
+.line {
+    margin: $spacing-m 0;
+    width: 100%;
+    height: $border-width-default;
+    background: $border-color-default;
+}

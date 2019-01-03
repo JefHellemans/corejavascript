@@ -1,10 +1,15 @@
 import * as React from "react";
 import * as classNames from "classnames";
 
-type styles = "big" | "no-underline";
+import * as styles from "./TextInput.scss";
+
+export const TextInputStyles = {
+    large: styles.large,
+    noUnderline: styles.noUnderline
+};
 
 type Props = {
-    className?: styles | styles[];
+    className?: string;
     placeholder?: string;
     value?: string;
     onChange: (value: string) => void;
@@ -16,7 +21,7 @@ export class TextInput extends React.Component<Props> {
         const { className, placeholder, value } = this.props;
         return (
             <input
-                className={classNames(className)}
+                className={classNames(styles.input, className)}
                 placeholder={placeholder}
                 type="text"
                 value={value}

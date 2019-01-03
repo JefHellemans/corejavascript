@@ -1,0 +1,53 @@
+// COLORS
+
+$color-neutral-0: #000;
+$color-neutral-1: #bbb;
+$color-neutral-2: #fff;
+
+$color-primary: #64c864;
+
+
+// TYPOGRAPHY
+
+$font-family-default: "Helvetica Neue";
+
+$font-size-s: 12px;
+$font-size-m: 16px;
+$font-size-l: 24px;
+
+$line-height-default: 1.4;
+
+
+// WHITESPACE
+
+$spacing-xs: 10px;
+$spacing-s: 20px;
+$spacing-m: 40px;
+$spacing-l: 60px;
+$spacing-xl: 80px;
+
+
+// BORDERS
+
+$border-width-default: 2px;
+
+$border-style-default: solid;
+
+$border-color-default: $color-neutral-0;
+
+$border-default: $border-width-default $border-style-default $border-color-default;
+$border-default-transparent: $border-width-default $border-style-default transparent;
+
+$border-radius-default: 4px;
+
+
+// TRANSITIONS
+
+$transition-default: .2s ease-in-out;
+
+
+// OPACITIES
+
+$opacity-0: 0;
+$opacity-1: 0.5;
+$opacity-2: 1;

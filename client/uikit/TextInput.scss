@@ -1,0 +1,29 @@
+@import "../variables.scss";
+
+.input {
+    border: none;
+    outline: none;
+    font-size: $font-size-m;
+    border-bottom: $border-default-transparent;
+    transition: $transition-default;
+    
+    &::placeholder {
+        color: $color-neutral-1;
+    }
+
+    &:focus {
+        border-bottom: $border-default;
+    }
+
+    &.large {
+        display: block;
+        font-size: $font-size-l;
+        width: 100%;
+    }
+
+    &.noUnderline {
+        &:focus {
+            border-bottom: $border-default-transparent;
+        }
+    }
+}
