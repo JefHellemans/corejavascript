@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import * as styles from "./TodoItem.scss";
 
 import { Checkbox, TextInput, TextInputStyles } from "../uikit";
+import { dateTimeToString } from "../../helpers/date";
 
 type Props = {
     todo: Todo;
@@ -36,27 +37,13 @@ export class TodoItem extends React.Component<Props> {
                         />
                         <div className={styles.dueDate}>
                             <span className={styles.dueDateLabel}>Due Date:</span>
-                            <input type="date" value={this.formatDate()} onChange={this.setDueDate} />
+                            <input type="datetime-local" value={dateTimeToString(todo.due)} onChange={this.setDueDate} />
                         </div>
                     </div>
                 </div>
                 <button onClick={this.remove}>Delete</button>
             </div>
         );
-    }
-
-    formatDate(): string {
-        const { due } = this.props.todo;
-
-        if (!due) {
-            return "";
-        }
-
-        const year = due.getFullYear();
-        const month = due.getMonth() + 1; // getMonth is 0-based
-        const day = due.getDate();
-
-        return `${year}-${month > 9 ? month : `0${month}`}-${day > 9 ? day : `0${day}`}`;
     }
 
     remove = () => this.props.onRemove(this.props.todo);

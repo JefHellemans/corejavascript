@@ -1,5 +1,5 @@
 import { computed, observable } from "mobx";
-import { get, post, put, remove } from "../api";
+import { get, post, put, remove } from "../helpers/api";
 
 const blankTodo = { description: "", completed: false };
 
