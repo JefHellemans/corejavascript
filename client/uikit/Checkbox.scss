@@ -16,6 +16,12 @@
 
     &.withLabel {
         padding: $spacing-xs $spacing-s;
+
+        &.small {
+            padding: $spacing-xxs $spacing-xs;
+            border-width: $border-width-s;
+            font-size: $font-size-xs;
+        }
     }
 
     input {

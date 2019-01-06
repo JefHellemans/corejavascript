@@ -11,6 +11,7 @@ $color-primary: #64c864;
 
 $font-family-default: "Helvetica Neue";
 
+$font-size-xs: 10px;
 $font-size-s: 12px;
 $font-size-m: 16px;
 $font-size-l: 24px;
@@ -20,6 +21,7 @@ $line-height-default: 1.4;
 
 // WHITESPACE
 
+$spacing-xxs: 2px;
 $spacing-xs: 10px;
 $spacing-s: 20px;
 $spacing-m: 40px;
@@ -29,14 +31,15 @@ $spacing-xl: 80px;
 
 // BORDERS
 
-$border-width-default: 2px;
+$border-width-s: 1px;
+$border-width-m: 2px;
 
 $border-style-default: solid;
 
 $border-color-default: $color-neutral-0;
 
-$border-default: $border-width-default $border-style-default $border-color-default;
-$border-default-transparent: $border-width-default $border-style-default transparent;
+$border-default: $border-width-m $border-style-default $border-color-default;
+$border-default-transparent: $border-width-m $border-style-default transparent;
 
 $border-radius-default: 4px;
 

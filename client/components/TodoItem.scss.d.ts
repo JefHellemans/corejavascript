@@ -4,4 +4,4 @@ export const description: string;
 export const inputs: string;
 export const extra: string;
 export const dueDate: string;
-export const dueDateLabel: string;
+export const dueDateInput: string;

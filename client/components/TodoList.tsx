@@ -32,7 +32,11 @@ export class TodoList extends React.Component<Props> {
                 />
                 <Line />
                 {displayedTodos.map((todo, index) =>
-                    <TodoItem key={index} todo={todo} onRemove={this.removeTodo} onSave={this.saveTodo} />
+                    <TodoItem
+                        key={index}
+                        todo={todo}
+                        todoState={this.props.todoState}
+                    />
                 )}
             </div>
         );
@@ -42,6 +46,4 @@ export class TodoList extends React.Component<Props> {
     toggleUncompleted = () => this.props.todoState.filters.uncompleted = !this.props.todoState.filters.uncompleted;
     updateNewTodo = (value: string) => this.props.todoState.newTodo.description = value;
     addTodo = () => { if (this.props.todoState.newTodo.description) this.props.todoState.addTodo() };
-    removeTodo = (todo: Todo) => this.props.todoState.removeTodo(todo);
-    saveTodo = (todo: Todo) => this.props.todoState.saveTodo(todo);
 }

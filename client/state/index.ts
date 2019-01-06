@@ -1,10 +1,11 @@
 import { computed, observable } from "mobx";
 import { get, post, put, remove } from "../helpers/api";
 
-const blankTodo = { description: "", completed: false };
+const blankTodo = { description: "", completed: false, due: null };
 
 export class TodoState {
     @observable todos: Todo[] = [];
+    private reminders: { [key: string]: NodeJS.Timeout } = {};
     @observable newTodo: Todo = { ...blankTodo };
     @observable filters = {
         completed: false,
@@ -41,5 +42,55 @@ export class TodoState {
 
     async saveTodo(todo: Todo) {
         put("/todos", todo);
+    }
+
+    toggleCompleted(todo: Todo) {
+        todo.completed = !todo.completed;
+        if (todo.reminder) {
+            this.clearReminder(todo);
+        }
+        this.saveTodo(todo);
+    }
+
+    setDueDate(todo: Todo, value: string) {
+        todo.due = !!value ? new Date(value) : null;
+        if (todo.reminder) {
+            this.clearReminder(todo);
+        }
+        this.saveTodo(todo);
+    }
+
+    toggleReminder(todo: Todo) {
+        if (!todo.id) {
+            throw new Error("Cannot set reminder for todo that has no id.");
+        }
+        if (!this.reminders[todo.id] && !todo.reminder) {
+            this.setReminder(todo);
+        } else {
+            this.clearReminder(todo);
+        }
+        this.saveTodo(todo);
+    }
+
+    private setReminder(todo: Todo) {
+        if (!todo.due) {
+            throw new Error("Cannot set reminder for todo that has no due date.");
+        }
+        todo.reminder = true;
+        this.reminders[todo.id!] = setTimeout(() => this.triggerReminder(todo), todo.due.getTime() - Date.now());
+    }
+
+    private clearReminder(todo: Todo) {
+        todo.reminder = false;
+        clearTimeout(this.reminders[todo.id!]);
+        delete this.reminders[todo.id!];
+    }
+
+    private triggerReminder(todo: Todo) {
+        if (confirm(`${todo.assignee || "You"} should have finished "${todo.description}". Mark it as completed?`)) {
+            todo.completed = true;
+        }
+        this.clearReminder(todo);
+        this.saveTodo(todo);
     }
 }

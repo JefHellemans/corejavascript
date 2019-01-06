@@ -4,13 +4,13 @@ import { observer } from "mobx-react";
 
 import * as styles from "./TodoItem.scss";
 
-import { Checkbox, TextInput, TextInputStyles } from "../uikit";
-import { dateTimeToString } from "../../helpers/date";
+import { dateTimeToString } from "../helpers/date";
+import { TodoState } from "../state";
+import { Checkbox, CheckboxStyles, TextInput, TextInputStyles } from "../uikit";
 
 type Props = {
     todo: Todo;
-    onRemove: (todo: Todo) => void;
-    onSave: (todo: Todo) => void;
+    todoState: TodoState;
 };
 
 @observer
@@ -36,8 +36,9 @@ export class TodoItem extends React.Component<Props> {
                             onSave={this.save}
                         />
                         <div className={styles.dueDate}>
-                            <span className={styles.dueDateLabel}>Due Date:</span>
-                            <input type="datetime-local" value={dateTimeToString(todo.due)} onChange={this.setDueDate} />
+                            <span>Due Date:</span>
+                            <input className={styles.dueDateInput} type="datetime-local" value={dateTimeToString(todo.due)} onChange={this.setDueDate} />
+                            {!!todo.id && !todo.completed && todo.due && <Checkbox className={CheckboxStyles.small} value={!!todo.reminder} label="Remind me" onToggle={this.toggleReminder} />}
                         </div>
                     </div>
                 </div>
@@ -46,16 +47,11 @@ export class TodoItem extends React.Component<Props> {
         );
     }
 
-    remove = () => this.props.onRemove(this.props.todo);
-    save = () => this.props.onSave(this.props.todo);
-    toggleCompleted = () => {
-        this.props.todo.completed = !this.props.todo.completed;
-        this.save();
-    };
+    remove = () => this.props.todoState.removeTodo(this.props.todo);
+    save = () => this.props.todoState.saveTodo(this.props.todo);
+    toggleCompleted = () => this.props.todoState.toggleCompleted(this.props.todo);
     setDescription = (value: string) => this.props.todo.description = value;
     setAssignee = (value: string) => this.props.todo.assignee = value;
-    setDueDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.todo.due = new Date(event.currentTarget.value);
-        this.save();
-    }
+    setDueDate = (event: React.ChangeEvent<HTMLInputElement>) => this.props.todoState.setDueDate(this.props.todo, event.currentTarget.value);
+    toggleReminder = () => this.props.todoState.toggleReminder(this.props.todo);
 }

@@ -26,8 +26,12 @@
                 display: flex;
                 align-items: center;
 
-                .dueDateLabel {
-                    margin-right: $spacing-s;
+                .dueDateInput {
+                    margin: 0 $spacing-s;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
                 }
             }
         }

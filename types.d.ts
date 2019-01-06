@@ -3,5 +3,6 @@ interface Todo {
     description: string;
     completed: boolean;
     assignee?: string;
-    due?: Date;
+    due: Date | null;
+    reminder?: boolean;
 }

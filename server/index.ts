@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+
 import { file, uuid } from "./helpers";
 
 let todos: Todo[] = [
@@ -8,6 +9,7 @@ let todos: Todo[] = [
         description: "Add new todos",
         completed: false,
         assignee: "Me",
+        due: null,
     }
 ];
 
@@ -24,8 +26,10 @@ app.post("/todos", (req, res) => {
     res.send(todo);
 });
 app.put("/todos", (req, res) => {
-    const todo = todos.find(todo => todo.id === req.body.id);
-    Object.assign(todo, req.body);
+    const newValues = { ...req.body };
+    const todo = todos.find(todo => todo.id === newValues.id);
+    newValues.date = newValues.date && new Date(newValues.date);
+    Object.assign(todo, newValues);
     res.send(todo);
 });
 app.delete("/todos", (req, res) => {

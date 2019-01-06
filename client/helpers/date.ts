@@ -1,4 +1,4 @@
-export function dateTimeToString(dateTime?: Date): string {
+export function dateTimeToString(dateTime: Date | null): string {
     if (!dateTime) {
         return "";
     }
