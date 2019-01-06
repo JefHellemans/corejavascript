@@ -26,7 +26,15 @@ export class TodoState {
 
     async getTodos() {
         const todos = await get<Todo[]>("/todos");
-        todos.forEach(todo => todo.due = todo.due && new Date(todo.due));
+        todos.forEach(todo => {
+            todo.due = todo.due && new Date(todo.due);
+            if (todo.reminder) {
+                if (this.reminders[todo.id!]) {
+                    this.clearReminder(todo);
+                }
+                this.setReminder(todo);
+            }
+        });
         this.todos = todos;
     }
 
@@ -87,7 +95,10 @@ export class TodoState {
     }
 
     private triggerReminder(todo: Todo) {
-        if (confirm(`${todo.assignee || "You"} should have finished "${todo.description}". Mark it as completed?`)) {
+        const message = todo.assignee ?
+            `${todo.assignee} should have finished "${todo.description}" by now.` :
+            `"${todo.description}" should have been finished by now.`;
+        if (confirm(`${message} Mark it as completed?`)) {
             todo.completed = true;
         }
         this.clearReminder(todo);
