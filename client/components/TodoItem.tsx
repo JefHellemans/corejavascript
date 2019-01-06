@@ -17,17 +17,24 @@ type Props = {
 export class TodoItem extends React.Component<Props> {
     render() {
         const { todo } = this.props;
+        const overdue = todo.due && (todo.due.getTime() - Date.now()) <= 0;
         return (
-            <div className={classNames(styles.todo, { [styles.saving]: !todo.id })}>
+            <div className={classNames(styles.todo, {
+                [styles.saving]: !todo.id,
+                [styles.overdue]: overdue,
+            })}>
                 <Checkbox value={todo.completed} onToggle={this.toggleCompleted} />
-                <div className={styles.inputs}>
-                    <TextInput
-                        className={classNames(styles.description, TextInputStyles.large)}
-                        placeholder="Todo Description"
-                        value={todo.description}
-                        onChange={this.setDescription}
-                        onSave={this.save}
-                    />
+                <div className={styles.details}>
+                    <div className={styles.descriptionContainer}>
+                        {overdue && <span>[OVERDUE]</span>}
+                        <TextInput
+                            className={classNames(styles.description, TextInputStyles.large)}
+                            placeholder="Todo Description"
+                            value={todo.description}
+                            onChange={this.setDescription}
+                            onSave={this.save}
+                        />
+                    </div>
                     <div className={styles.extra}>
                         <TextInput
                             placeholder="Assignee"

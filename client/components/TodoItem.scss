@@ -9,11 +9,25 @@
         opacity: $opacity-1;
     }
 
-    .description {
-        margin-bottom: $spacing-xs;
+    &.overdue {
+        .description {
+            color: $color-error;
+        }
     }
 
-    .inputs {
+    .descriptionContainer {
+        display: flex;
+        margin-bottom: $spacing-xs;
+        align-items: center;
+
+        span {
+            margin-right: $spacing-xs;
+            color: $color-error;
+        }
+    }
+    
+
+    .details {
         flex-grow: 100;
         margin: 0 $spacing-m;
 
