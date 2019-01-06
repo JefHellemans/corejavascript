@@ -1,7 +1,8 @@
-import { computed, observable } from "mobx";
+import { computed, observable, IObservableArray } from "mobx";
 import { get, post, put, remove } from "../helpers/api";
 
 const blankTodo = { description: "", completed: false, due: null };
+const POLL_INTERVAL = 5000; // every 5 seconds
 
 export class TodoState {
     @observable todos: Todo[] = [];
@@ -22,6 +23,8 @@ export class TodoState {
 
     constructor() {
         this.getTodos();
+        // use bind to prevent the "this" problem (https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval#The_this_problem)
+        setInterval(this.getTodos.bind(this), POLL_INTERVAL);
     }
 
     async getTodos() {
@@ -35,7 +38,7 @@ export class TodoState {
                 this.setReminder(todo);
             }
         });
-        this.todos = todos;
+        (this.todos as IObservableArray<Todo>).replace(todos);
     }
 
     async addTodo() {
