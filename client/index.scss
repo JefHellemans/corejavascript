@@ -29,3 +29,15 @@ button {
         color: $color-neutral-2;
     }
 }
+
+.header {
+    margin-bottom: $spacing-m;
+
+    button {
+        margin-left: $spacing-s;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}

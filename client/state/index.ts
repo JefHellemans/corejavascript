@@ -27,6 +27,17 @@ export class TodoState {
         setInterval(this.getTodos.bind(this), POLL_INTERVAL);
     }
 
+    generateNow = async () => {
+        // the API ensures this todo is generated quickly, so we fetch it immediately
+        await fetch("/generate-now");
+        this.getTodos();
+    }
+
+    generateSoon() {
+        // the API promises to generate this todo when it has no other work to do, it will (most likely) be picked up on the next poll request
+        fetch("/generate-soon");
+    }
+
     async getTodos() {
         const todos = await get<Todo[]>("/todos");
         todos.forEach(todo => {
