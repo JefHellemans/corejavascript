@@ -1,9 +1,23 @@
+type BufferedUpdate = {
+    url: string,
+    data: any,
+};
+
+const BUFFER_TIMEOUT = 300; // buffer multiple keystrokes to one update
+const bufferedUpdates: { [key: string]: BufferedUpdate } = {};
+
 function fetchJSON(url: string, method: string, data: any) {
     return fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     });
+}
+
+function executeUpdate(id: string) {
+    const update = bufferedUpdates[id];
+    fetchJSON(update.url, "PUT", update.data);
+    delete bufferedUpdates[id];
 }
 
 export async function get<T>(url: string): Promise<T> {
@@ -25,12 +39,19 @@ export async function post<T>(url: string, data: T, list?: T[]): Promise<T> {
     return responseData;
 }
 
-export async function put<T>(url: string, data: T): Promise<T> {
-    if (!(data as any).id) {
+export function put(url: string, data: any) {
+    const { id } = data;
+    if (!id) {
         throw new Error("Cannot PUT on data that has no id");
     }
-    const response = await fetchJSON(url, "PUT", data);
-    return await response.json() as T;
+    const update = bufferedUpdates[id];
+    if (!update) {
+        bufferedUpdates[id] = { url, data };
+        setTimeout(executeUpdate.bind(null, id), BUFFER_TIMEOUT);
+    } else {
+        update.url = url;
+        update.data = data;
+    }
 }
 
 export async function remove(url: string, data: any) {

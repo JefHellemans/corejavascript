@@ -57,8 +57,8 @@ export class TodoItem extends React.Component<Props> {
     remove = () => this.props.todoState.removeTodo(this.props.todo);
     save = () => this.props.todoState.saveTodo(this.props.todo);
     toggleCompleted = () => this.props.todoState.toggleCompleted(this.props.todo);
-    setDescription = (value: string) => this.props.todo.description = value;
-    setAssignee = (value: string) => this.props.todo.assignee = value;
+    setDescription = (value: string) => { this.props.todo.description = value; this.save(); }
+    setAssignee = (value: string) => { this.props.todo.assignee = value; this.save(); }
     setDueDate = (event: React.ChangeEvent<HTMLInputElement>) => this.props.todoState.setDueDate(this.props.todo, event.currentTarget.value);
     toggleReminder = () => this.props.todoState.toggleReminder(this.props.todo);
 }
