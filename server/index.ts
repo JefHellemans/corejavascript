@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 
 import { file, uuid } from "./helpers";
 
-let todos: Todo[] = [
+export let todos: Todo[] = [
     {
         id: uuid(),
         description: "Add new todos",
@@ -13,7 +13,7 @@ let todos: Todo[] = [
     }
 ];
 
-function generateTodo(description: string) {
+export function generateTodo(description: string) {
     todos.push({
         id: uuid(),
         description,
@@ -75,4 +75,6 @@ app.delete("/todos", (req, res) => {
     res.sendStatus(200);
 });
 
-app.listen(3000, () => console.log("server started"));
+if (!process.env.JEST_WORKER_ID) {
+    app.listen(3000, () => console.log("server started"));
+}
