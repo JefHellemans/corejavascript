@@ -10,6 +10,6 @@
         "sourceMap": true,
         "experimentalDecorators": true,
 
-        "types": [ "../types", "node" ]
+        "types": [ "../types", "node", "jest" ]
     }
 }

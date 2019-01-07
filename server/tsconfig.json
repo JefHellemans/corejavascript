@@ -9,6 +9,7 @@
         "strict": true,
         "sourceMap": true,
 
-        "types": [ "../types", "node" ]
+        "lib": [ "es2016" ],
+        "types": [ "../types", "node", "jest" ]
     }
 }
